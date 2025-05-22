@@ -44,14 +44,15 @@ const Header = ({setSearch}) => {
                 />
               </Form>
           </Nav>
+          {userInfo ?(
           <Nav className="me-auto">
             <Nav.Link href="/mynotes">
               <Link to={'/mynotes'}>
                   My Notes
               </Link>
             </Nav.Link>
-            <NavDropdown title="Arpit Jangid" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
+            <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+              <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
               
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logoutHandler}>
@@ -59,6 +60,8 @@ const Header = ({setSearch}) => {
           
             </NavDropdown>
           </Nav>
+            ): (
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>)}
         </Navbar.Collapse>
       </Container>
     </Navbar>
