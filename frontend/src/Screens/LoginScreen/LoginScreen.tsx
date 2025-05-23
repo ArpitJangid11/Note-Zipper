@@ -7,6 +7,7 @@ import Loading from "../../component/Loading";
 import ErrorMessage from "../../component/ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
+import type { RootState } from "../../store";
 
 const LoginScreen = () => {
   const[email,setEmail] = useState("")
@@ -14,7 +15,7 @@ const LoginScreen = () => {
  
   const dispatch =useDispatch()
   const navigate =useNavigate()
-  const userLogin =useSelector((state) => state.userLogin)
+  const userLogin =useSelector((state :RootState) => state.userLogin)
   const {loading, error, userInfo} = userLogin
   useEffect(()=>{
     if(userInfo){
@@ -22,7 +23,7 @@ const LoginScreen = () => {
     }
   },[navigate, userInfo])
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     dispatch(login(email,password))
   }

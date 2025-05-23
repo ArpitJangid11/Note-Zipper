@@ -1,7 +1,14 @@
 import { Container, Row } from "react-bootstrap"
 import './MainScreen.css'
+import './MainScreen.css';
+import type { ReactNode } from "react";
 
-const MainScreen = ({title, children}) => {
+interface MainScreenProps {
+  title?: string;
+  children: ReactNode;
+}
+
+const MainScreen = ({ title, children }: MainScreenProps) => {
   return (
     <div className="mainback">
         <Container>

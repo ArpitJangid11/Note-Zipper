@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import MainScreen from "../../component/MainScreen";
 import "./ProfileScreen.css";
@@ -7,23 +7,24 @@ import { updateProfile } from "../../actions/userActions";
 import Loading from "../../component/Loading";
 import ErrorMessage from "../../component/ErrorMessage";
 import { useNavigate } from "react-router-dom";
+import { type RootState } from "../../store";
 
-const ProfileScreen = ({ location}) => {
+const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [pic, setPic] = useState();
+  const [pic, setPic] = useState<string | undefined>();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [picMessage, setPicMessage] = useState();
+  const [picMessage, setPicMessage] = useState("");
 
   const dispatch = useDispatch();
    
   const navigate =useNavigate()
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state: RootState) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdate = useSelector((state) => state.userUpdate);
+  const userUpdate = useSelector((state: RootState) => state.userUpdate);
   const { loading, error, success } = userUpdate;
 
   useEffect(() => {
@@ -36,8 +37,8 @@ const ProfileScreen = ({ location}) => {
     }
   }, [navigate, userInfo]);
 
-  const postDetails = (pics) => {
-    setPicMessage(null);
+  const postDetails = (pics: File ) => {
+    setPicMessage("");
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
@@ -60,7 +61,7 @@ const ProfileScreen = ({ location}) => {
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     dispatch(updateProfile({ name, email, password, pic }));
@@ -121,15 +122,20 @@ const ProfileScreen = ({ location}) => {
               <Form.Group controlId="pic">
                 <Form.Label>Change Profile Picture</Form.Label>
                 <Form.Control
-                  onChange={(e) => postDetails(e.target.files[0])}
+                    onChange={(e) => {
+                      const target = e.target as HTMLInputElement;
+                      if (target.files && target.files[0]) {
+                        postDetails(target.files[0]);
+                      }
+                    }}
                   id="custom-file"
                   type="file"
                   accept="image/png, image/jpg"
-                  label="Upload Profile Picture"
-                  custom
+                  // label="Upload Profile Picture"
+                  // custom
                 />
               </Form.Group>
-              <Button type="submit" varient="primary">
+              <Button type="submit">
                 Update
               </Button>
             </Form>

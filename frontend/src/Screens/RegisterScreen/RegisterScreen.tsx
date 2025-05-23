@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../component/Loading";
@@ -7,6 +7,7 @@ import MainScreen from "../../component/MainScreen";
 import "./RegisterScreen.css";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
+import type { RootState } from "../../store";
 
 function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -14,12 +15,12 @@ function RegisterScreen() {
   const [pic, setPic] = useState("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  const [picMessage, setPicMessage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [picMessage, setPicMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
   const dispatch =useDispatch()
-  const userRegister= useSelector((state) => state.userRegister)
+  const userRegister= useSelector((state: RootState) => state.userRegister)
   const {loading, error, userInfo} = userRegister
    
   useEffect(()=>{
@@ -28,7 +29,7 @@ function RegisterScreen() {
     }
   }) 
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if(password!== confirmpassword){
       setMessage("Password does not match")
@@ -37,8 +38,8 @@ function RegisterScreen() {
     }
   };
 
-  const postDetails = (pic) => {
-  setPicMessage(null);
+  const postDetails = (pic: File  ) => {
+  setPicMessage("");
   if (!pic) {
     return setPicMessage("Please select an image");
   }
@@ -127,7 +128,12 @@ function RegisterScreen() {
             <Form.Control
               type="file"
               accept="image/png, image/jpg*"
-              onChange={(e) => postDetails(e.target.files[0])}
+               onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    postDetails(target.files[0]);
+                  }
+                }}
             />
           </Form.Group>
 

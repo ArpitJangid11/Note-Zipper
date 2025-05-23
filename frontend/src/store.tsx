@@ -14,7 +14,10 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
 });
 
-const userInfoFromStorage = localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')):null
+const userInfoString = localStorage.getItem("userInfo") as string;
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(userInfoString)
+  : null;
 
 const initialState = {
   userLogin: {userInfo: userInfoFromStorage}
@@ -28,5 +31,5 @@ const store = createStore(
   
   composeWithDevTools(applyMiddleware(...middleware))
 );
-
+export type RootState = ReturnType<typeof store.getState>;
 export default store;

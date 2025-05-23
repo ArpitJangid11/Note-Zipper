@@ -1,3 +1,5 @@
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import MainScreen from "../../component/MainScreen"
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
@@ -8,28 +10,30 @@ import { deleteNoteAction, listNotes } from "../../actions/notesActions";
 import Loading from "../../component/Loading";
 import ErrorMessage from "../../component/ErrorMessage";
 // import LandingPage from "../LandingPage/LandingPage";
+// import LandingPage from "../LandingPage/LandingPage";
+import type { RootState } from "../../store";
 
-
-const MyNote = ({search}) => {
+const MyNote = ({ search }: { search: string }) => {
 
   const dispatch =useDispatch()
-  const  noteList = useSelector((state) => state.noteList)
+  const  noteList = useSelector((state: RootState) => state.noteList)
   const {loading, notes,error} = noteList
   
-  const  userLogin = useSelector((state) => state.userLogin)
+  const  userLogin = useSelector((state: RootState) => state.userLogin)
   const {userInfo} = userLogin
   
-  const  noteCreate = useSelector((state) => state.noteCreate)
+  const  noteCreate = useSelector((state: RootState) => state.noteCreate)
   const {success : successCreate} = noteCreate
   
-  const  noteUpdate = useSelector((state) => state.noteUpdate)
+  const  noteUpdate = useSelector((state: RootState) => state.noteUpdate)
   const {success : successUpdate} = noteUpdate
   
-  const  noteDelete = useSelector((state) => state.noteDelete)
-  const {loading: loadingDelete, error: errorDelete, success : successDelete} = noteDelete
+  const  noteDelete = useSelector((state: RootState) => state.noteDelete)
+  
+  const {loading: loadingDelete, error: errorDelete} = noteDelete
   
   const navigate = useNavigate()
-  const deleteHandler =(id)=>{
+  const deleteHandler =(id: any)=>{
     if(window.confirm("Are you sure. You want to delete this Note")){
       dispatch(deleteNoteAction(id))
     }
@@ -42,9 +46,9 @@ const MyNote = ({search}) => {
     if(!userInfo){
      navigate("/")
     }
-  },[dispatch, navigate, successCreate, successUpdate, noteDelete])
+  },[dispatch, navigate, successCreate, successUpdate, noteDelete, userInfo])
   return (
-      <MainScreen title = {`Welcome Back ${userInfo.name}`}>
+      <MainScreen title = {`Welcome Back ${userInfo ? userInfo.name : ""}`}>
         <Link to='/createnote'>
           <Button style={{marginLeft:10, marginBottom:6 }} size="lg">
             Create New Note

@@ -8,20 +8,26 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { logout } from "../../actions/userActions";
+import type { RootState } from "../../store";
+import { useEffect } from "react";
+interface HeaderProps {
+  setSearch: (value: string) => void;
+}
 
-const Header = ({setSearch}) => {
+const Header = ({ setSearch }: HeaderProps) => {
   const navigate=useNavigate()
   const dispatch =useDispatch()
 
-  const userLogin = useSelector((state)=> state.userLogin)
+  const userLogin = useSelector((state: RootState)=> state.userLogin)
   const {userInfo} =userLogin
 
   const logoutHandler = () => {
     dispatch(logout())
     navigate('/')
   }
+   useEffect(() => {}, [navigate,userInfo]);
 
   return (
     <>

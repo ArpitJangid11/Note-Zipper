@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainScreen from "../../component/MainScreen";
 import axios from "axios";
 import { Button, Card, Form } from "react-bootstrap";
@@ -9,30 +9,27 @@ import Loading from "../../component/Loading";
 import ReactMarkdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
-interface RouteParams {
-  id: string;
-}
-
-
+import type { RootState } from "../../store";
 
 function SingleNote() {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [category, setCategory] = useState();
+  const [title, setTitle] = useState<string | undefined>();
+  const [content, setContent] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [date, setDate] = useState("");
-  const { id } = useParams<RouteParams>();
+  const { id } = useParams();
+  
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate()
 
-  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const noteUpdate = useSelector((state: RootState) => state.noteUpdate);
   const { loading, error } = noteUpdate;
 
-  const noteDelete = useSelector((state) => state.noteDelete);
+  const noteDelete = useSelector((state: RootState) => state.noteDelete);
   const { loading: loadingDelete, error: errorDelete } = noteDelete;
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (id: string | undefined) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
     }
@@ -58,7 +55,7 @@ function SingleNote() {
     setContent("");
   };
 
-  const updateHandler = (e) => {
+  const updateHandler = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     dispatch(updateNoteAction(id, title, content, category));
     if (!title || !content || !category) return;

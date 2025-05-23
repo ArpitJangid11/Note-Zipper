@@ -5,7 +5,7 @@ import './bootstrap.min.css'
 // import reportWebVitals from "reportWebVitals"
 import App from './App.tsx'
 import { Provider } from 'react-redux'
-import store from "./store"
+import store from "./store.tsx"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

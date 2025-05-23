@@ -1,7 +1,8 @@
 import axios from "axios"
 import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constant/userConstant"
 
-export const login = (email, password) => async (dispatch) =>{
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const login = (email: string, password: string) => async (dispatch: (arg0: { type: string; payload?: any }) => void) =>{
      try {
         dispatch({type : USER_LOGIN_REQUEST})
         const config ={
@@ -13,7 +14,8 @@ export const login = (email, password) => async (dispatch) =>{
         dispatch({type : USER_LOGIN_SUCCESS, payload: data})
         localStorage.setItem('userInfo', JSON.stringify(data));
 
-        } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error : any) {
         dispatch({type: USER_LOGIN_FAIL, payload: 
             error.response && error.response.data.message
             ?error.response.data.message
@@ -23,12 +25,13 @@ export const login = (email, password) => async (dispatch) =>{
     
 }
 
-export const  logout = () => async (dispatch) =>{
+export const  logout = () => async (dispatch: (arg0: { type: string; }) => void) =>{
     localStorage.removeItem('userInfo')
     dispatch({type: USER_LOGOUT})
 }
 
-export const register = (name, email, password, pic) => async (dispatch) =>{
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const register = (name: string, email: string, password: string, pic: string) => async (dispatch: (arg0: { type: string; payload?: any; }) => void) =>{
      try {
         dispatch({type : USER_REGISTER_REQUEST})
         const config ={
@@ -45,7 +48,8 @@ export const register = (name, email, password, pic) => async (dispatch) =>{
 
         localStorage.setItem('userInfo', JSON.stringify(data));
 
-        } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error : any) {
         dispatch({type: USER_REGISTER_FAIL, payload: 
             error.response && error.response.data.message
             ?error.response.data.message
@@ -55,7 +59,8 @@ export const register = (name, email, password, pic) => async (dispatch) =>{
     
 }
 
-export const updateProfile = (user) => async (dispatch, getState) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const updateProfile = (user: { name: string; email: string; password: string; pic?: string; }) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userLogin: { userInfo: any; }; }) => {
   try {
     dispatch({ type: USER_UPDATE_REQUEST });
 
@@ -77,7 +82,8 @@ export const updateProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     dispatch({
       type: USER_UPDATE_FAIL,
       payload:

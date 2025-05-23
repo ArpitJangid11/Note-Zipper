@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   NOTES_CREATE_FAIL,
   NOTES_CREATE_REQUEST,
@@ -14,7 +15,7 @@ import {
 } from "../constant/notesConstants";
 import axios from "axios";
 
-export const listNotes = () => async (dispatch, getState) => {
+export const listNotes = () => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userLogin: { userInfo: any; }; }) => {
   try {
     dispatch({
       type: NOTES_LIST_REQUEST,
@@ -36,7 +37,7 @@ export const listNotes = () => async (dispatch, getState) => {
       type: NOTES_LIST_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -48,9 +49,9 @@ export const listNotes = () => async (dispatch, getState) => {
   }
 };
 
-export const createNoteAction = (title, content, category) => async (
-  dispatch,
-  getState
+export const createNoteAction = (title: string, content: string, category: string) => async (
+  dispatch: (arg0: { type: string; payload?: any; }) => void,
+  getState: () => { userLogin: { userInfo: any; }; }
 ) => {
   try {
     dispatch({
@@ -78,7 +79,7 @@ export const createNoteAction = (title, content, category) => async (
       type: NOTES_CREATE_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -90,7 +91,8 @@ export const createNoteAction = (title, content, category) => async (
   }
 };
 
-export const deleteNoteAction = (id) => async (dispatch, getState) => {
+
+export const deleteNoteAction = (id: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userLogin: { userInfo: any; }; }) => {
   try {
     dispatch({
       type: NOTES_DELETE_REQUEST,
@@ -112,7 +114,8 @@ export const deleteNoteAction = (id) => async (dispatch, getState) => {
       type: NOTES_DELETE_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+    
+  } catch (error : any) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -124,9 +127,9 @@ export const deleteNoteAction = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateNoteAction = (id, title, content, category) => async (
-  dispatch,
-  getState
+export const updateNoteAction = (id: string | undefined, title:string | undefined, content: string | undefined, category: string | undefined) => async (
+  dispatch: (arg0: { type: string; payload?: any; }) => void,
+  getState: () => { userLogin: { userInfo: any; }; }
 ) => {
   try {
     dispatch({
@@ -154,7 +157,8 @@ export const updateNoteAction = (id, title, content, category) => async (
       type: NOTES_UPDATE_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+    
+  } catch (error : any) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
