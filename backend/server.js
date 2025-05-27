@@ -27,13 +27,13 @@ app.use("/api/notes", noteRoutes);
 
 // -------------------Diployement---------------------
 
-const __dirname = path.resolve();
+const rootDir = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
+  app.use(express.static(path.join(rootDir, "/frontend/dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile();
+    res.sendFile(path.resolve(rootDir, "frontend", "dist", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {

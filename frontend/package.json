@@ -3,10 +3,10 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "version": "0.0.0",
-  "type": "module",
+  
   "scripts": {
-    "start": "vite",
-    "build": "tsc -b && vite build",
+    "start": "vite --openssl-legacy-provider",
+    "build": "tsc -b && vite --openssl-legacy-provider build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
