@@ -5,8 +5,8 @@
   "version": "0.0.0",
   
   "scripts": {
-    "start": "vite --openssl-legacy-provider",
-    "build": "tsc -b && vite --openssl-legacy-provider build",
+    "start": "vite",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
