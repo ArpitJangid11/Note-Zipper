@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import {thunk} from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension"
+import { compose } from 'redux';
 import { userLoginReducers, userRegisterReducers, userUpdateReducer } from "./reducers/userReducers";
 import { noteCreateReducer, noteDeleteReducer, noteListReducer, noteUpdateReducer } from "./reducers/notesReducers";
 
@@ -29,7 +29,7 @@ const store = createStore(
   reducer,
   initialState,
   
-  composeWithDevTools(applyMiddleware(...middleware))
+  compose(applyMiddleware(...middleware))
 );
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
