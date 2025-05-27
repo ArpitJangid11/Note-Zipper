@@ -4,8 +4,8 @@
   "proxy": "http://localhost:5000",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
-    "build": "tsc -b && vite build",
+    "start": "--legacy-peer-deps vite",
+    "build": "tsc -b && vite --legacy-peer-deps build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
